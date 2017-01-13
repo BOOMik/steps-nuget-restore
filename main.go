@@ -6,8 +6,10 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
-
+	
+	"github.com/kardianos/osext"
 	"github.com/bitrise-io/go-utils/cmdex"
 	"github.com/bitrise-io/go-utils/log"
 	"github.com/bitrise-io/go-utils/pathutil"
@@ -88,19 +90,15 @@ func main() {
 	fmt.Println()
 	configs.print()
 
-	if err := configs.validate(); err != nil {
-		log.Error("Issue with input: %s", err)
-		os.Exit(1)
-	}
-	 ex, err := os.Executable()
+	folderPath, err := osext.ExecutableFolder()
     if err != nil {
-        panic(err)
+        log.Fatal(err)
     }
-    exPath := path.Dir(ex)
-    fmt.Println(exPath)
+    fmt.Println(folderPath)
+	
 	nugetPth := "NuGet4.exe"
 	
-	nugelLocalPath := filepath.Join(exPath, "NuGet4.exe")
+	nugelLocalPath := filepath.Join(folderPath, "NuGet4.exe")
 	nugetRestoreCmdArgs := []string{constants.MonoPath, nugelLocalPath}
     fmt.Println(nugelLocalPath)
     fmt.Println(nugetRestoreCmdArgs)
