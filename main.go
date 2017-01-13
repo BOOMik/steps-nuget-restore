@@ -18,13 +18,13 @@ import (
 // ConfigsModel ...
 type ConfigsModel struct {
 	XamarinSolution string
-	NugetVersion    string
+	NugetUrl    string
 }
 
 func createConfigsModelFromEnvs() ConfigsModel {
 	return ConfigsModel{
 		XamarinSolution: os.Getenv("xamarin_solution"),
-		NugetVersion:    os.Getenv("nuget_version"),
+		NugetUrl:    os.Getenv("nuget_url"),
 	}
 }
 
@@ -32,7 +32,7 @@ func (configs ConfigsModel) print() {
 	log.Info("Configs:")
 
 	log.Detail("- XamarinSolution: %s", configs.XamarinSolution)
-	log.Detail("- NugetVersion: %s", configs.NugetVersion)
+	log.Detail("- NugetUrl: %s", configs.NugetUrl)
 }
 
 func (configs ConfigsModel) validate() error {
@@ -92,11 +92,19 @@ func main() {
 		log.Error("Issue with input: %s", err)
 		os.Exit(1)
 	}
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+            log.Fatal(err)
+    }
+	nugetPth := "NuGet4.exe"
+	
+	nugelLocalPath := filepath.Join(dir, "NuGet4.exe")
+	nugetRestoreCmdArgs := []string{constants.MonoPath, nugelLocalPath}
+    fmt.Println(nugelLocalPath)
+    fmt.Println(nugetRestoreCmdArgs)
 
-	nugetPth := "/Library/Frameworks/Mono.framework/Versions/Current/bin/nuget"
-	nugetRestoreCmdArgs := []string{nugetPth}
 
-	if configs.NugetVersion == "latest" {
+	if configs.NugetUrl == "latest" {
 		fmt.Println()
 		log.Info("Updating Nuget to latest version...")
 		// "sudo $nuget update -self"
@@ -116,10 +124,9 @@ func main() {
 			log.Error("Failed to update nuget, error: %s", err)
 			os.Exit(1)
 		}
-	}
-	
+	} else if configs.NugetUrl != "" {
 		fmt.Println()
-		log.Info("Downloading Nuget %s version...", configs.NugetVersion)
+		log.Info("Downloading Nuget from %s ...", configs.NugetUrl)
 		tmpDir, err := pathutil.NormalizedOSTempDirPath("__nuget__")
 		if err != nil {
 			log.Error("Failed to create tmp dir, error: %s", err)
@@ -129,7 +136,7 @@ func main() {
 		downloadPth := filepath.Join(tmpDir, "nuget.exe")
 
 		// https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe
-		nugetURL := fmt.Sprintf("https://github.com/BOOMik/steps-nuget-restore/blob/master/NuGet4.exe?raw=true", configs.NugetVersion)
+		nugetURL := configs.NugetUrl
 
 		log.Detail("Download URL: %s", nugetURL)
 
@@ -137,7 +144,7 @@ func main() {
 			log.Warn("Download failed, error: %s", err)
 
 			// https://dist.nuget.org/win-x86-commandline/v3.4.4/NuGet.exe
-			nugetURL = fmt.Sprintf("https://dist.nuget.org/win-x86-commandline/v%s/NuGet.exe", configs.NugetVersion)
+			nugetURL = configs.NugetUrl
 
 			log.Detail("Retry download URl: %s", nugetURL)
 
@@ -148,7 +155,7 @@ func main() {
 		}
 
 		nugetRestoreCmdArgs = []string{constants.MonoPath, downloadPth}
-	
+	}
 
 	fmt.Println()
 	log.Info("Restoring Nuget packages...")

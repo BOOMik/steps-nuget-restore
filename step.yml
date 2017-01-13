@@ -28,16 +28,16 @@ inputs:
       description: |
         Path to Xamarin solution
       is_required: true
-  - nuget_version:
+  - nuget_url:
     opts:
-      title: NuGet version
+      title: NuGet Url
       description: |
         The default NuGet restore step uses the NuGet version that ships with Xamarin.
 
-        Specify this input if you would like to use a custom NuGet version.
+        Specify this input if you would like to use a custom NuGet url.
         You can find all the available NuGet distribution here: https://dist.nuget.org/index.html.
 
         Format examples:
 
-        - 2.8.6
         - latest
+        - https://github.com/BOOMik/steps-nuget-restore/blob/master/NuGet4.exe?raw=true
