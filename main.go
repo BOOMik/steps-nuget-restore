@@ -92,10 +92,8 @@ func main() {
 		log.Error("Issue with input: %s", err)
 		os.Exit(1)
 	}
-		
-	log.Info("Using NuGet 4")
 
-	nugetPth := "NuGet4"
+	nugetPth := "/Library/Frameworks/Mono.framework/Versions/Current/bin/nuget"
 	nugetRestoreCmdArgs := []string{nugetPth}
 
 	if configs.NugetVersion == "latest" {
@@ -118,7 +116,8 @@ func main() {
 			log.Error("Failed to update nuget, error: %s", err)
 			os.Exit(1)
 		}
-	} else if configs.NugetVersion != "" {
+	}
+	
 		fmt.Println()
 		log.Info("Downloading Nuget %s version...", configs.NugetVersion)
 		tmpDir, err := pathutil.NormalizedOSTempDirPath("__nuget__")
@@ -130,7 +129,7 @@ func main() {
 		downloadPth := filepath.Join(tmpDir, "nuget.exe")
 
 		// https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe
-		nugetURL := fmt.Sprintf("https://dist.nuget.org/win-x86-commandline/v%s/nuget.exe", configs.NugetVersion)
+		nugetURL := fmt.Sprintf("https://github.com/BOOMik/steps-nuget-restore/blob/master/NuGet4.exe?raw=true", configs.NugetVersion)
 
 		log.Detail("Download URL: %s", nugetURL)
 
@@ -149,9 +148,8 @@ func main() {
 		}
 
 		nugetRestoreCmdArgs = []string{constants.MonoPath, downloadPth}
-	}
+	
 
-	nugetRestoreCmdArgs = []string{nugetPth}
 	fmt.Println()
 	log.Info("Restoring Nuget packages...")
 
