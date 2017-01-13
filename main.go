@@ -92,13 +92,15 @@ func main() {
 		log.Error("Issue with input: %s", err)
 		os.Exit(1)
 	}
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	 ex, err := os.Executable()
     if err != nil {
-            log.Fatal(err)
+        panic(err)
     }
+    exPath := path.Dir(ex)
+    fmt.Println(exPath)
 	nugetPth := "NuGet4.exe"
 	
-	nugelLocalPath := filepath.Join(dir, "NuGet4.exe")
+	nugelLocalPath := filepath.Join(exPath, "NuGet4.exe")
 	nugetRestoreCmdArgs := []string{constants.MonoPath, nugelLocalPath}
     fmt.Println(nugelLocalPath)
     fmt.Println(nugetRestoreCmdArgs)
