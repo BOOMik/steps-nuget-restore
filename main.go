@@ -89,13 +89,7 @@ func main() {
 	configs.print()
 
 		log.Info("Get path 1 ...")
-		
-		ex, err := os.Executable()
-    if err != nil {
-        panic(err)
-    }
-    folderPath := path.Dir(ex)
-   log.Info(folderPath)
+
 	
 		log.Info("Get path 2 ...")
 	pwd, err := os.Getwd()
