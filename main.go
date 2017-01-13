@@ -92,6 +92,8 @@ func main() {
 		log.Error("Issue with input: %s", err)
 		os.Exit(1)
 	}
+		
+	log.Info("Using NuGet 4")
 
 	nugetPth := "NuGet4"
 	nugetRestoreCmdArgs := []string{nugetPth}
@@ -149,6 +151,7 @@ func main() {
 		nugetRestoreCmdArgs = []string{constants.MonoPath, downloadPth}
 	}
 
+	nugetRestoreCmdArgs := []string{nugetPth}
 	fmt.Println()
 	log.Info("Restoring Nuget packages...")
 
