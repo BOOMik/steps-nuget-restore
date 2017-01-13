@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"net/http"
 	"path"
 	"path/filepath"
 	
-	"github.com/kardianos/osext"
 	"github.com/bitrise-io/go-utils/cmdex"
 	"github.com/bitrise-io/go-utils/log"
 	"github.com/bitrise-io/go-utils/pathutil"
@@ -89,10 +89,12 @@ func main() {
 	configs.print()
 
 		log.Info("Get path 1 ...")
-	folderPath, err := osext.ExecutableFolder()
+		
+		ex, err := os.Executable()
     if err != nil {
-        fmt.Println(err)
+        panic(err)
     }
+    folderPath := path.Dir(ex)
    log.Info(folderPath)
 	
 		log.Info("Get path 2 ...")
