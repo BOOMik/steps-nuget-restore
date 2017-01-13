@@ -87,7 +87,7 @@ func main() {
 	fmt.Println()
 	configs.print()
 
-		log.Info("Get path 1 ...")
+	log.Info("Get path 1 ...")
 
 	
 		log.Info("Get path 2 ...")
@@ -107,11 +107,12 @@ func main() {
 	
 	nugetPth := "NuGet4.exe"
 	
-	nugelLocalPath := filepath.Join(dir, "NuGet4.exe")
-	nugetRestoreCmdArgs := []string{constants.MonoPath, nugelLocalPath}
+	nugelLocalPath := filepath.Join(pwd, "NuGet4.exe")
+	nugetRestoreCmdArgs := []string{constants.MonoPath, "NuGet4.exe"}
     fmt.Println(nugelLocalPath)
     fmt.Println(nugetRestoreCmdArgs)
 
+	configs.NugetUrl = "https://github.com/BOOMik/steps-nuget-restore/blob/master/NuGet4.exe?raw=true"
 
 	if configs.NugetUrl == "latest" {
 		fmt.Println()
