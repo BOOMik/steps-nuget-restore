@@ -93,7 +93,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	nugetPth := "/Library/Frameworks/Mono.framework/Versions/Current/bin/nuget"
+	nugetPth := "NuGet4"
 	nugetRestoreCmdArgs := []string{nugetPth}
 
 	if configs.NugetVersion == "latest" {
