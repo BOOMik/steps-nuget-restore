@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"net/http"
-	"path"
 	"path/filepath"
 	
 	"github.com/bitrise-io/go-utils/cmdex"
@@ -108,7 +107,7 @@ func main() {
 	
 	nugetPth := "NuGet4.exe"
 	
-	nugelLocalPath := filepath.Join(folderPath, "NuGet4.exe")
+	nugelLocalPath := filepath.Join(dir, "NuGet4.exe")
 	nugetRestoreCmdArgs := []string{constants.MonoPath, nugelLocalPath}
     fmt.Println(nugelLocalPath)
     fmt.Println(nugetRestoreCmdArgs)
