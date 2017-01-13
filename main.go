@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"path"
 	"path/filepath"
 	
@@ -16,7 +15,6 @@ import (
 	"github.com/bitrise-io/go-utils/retry"
 	"github.com/bitrise-tools/go-xamarin/constants"
 )
-
 // ConfigsModel ...
 type ConfigsModel struct {
 	XamarinSolution string
@@ -90,11 +88,27 @@ func main() {
 	fmt.Println()
 	configs.print()
 
+		log.Info("Get path 1 ...")
 	folderPath, err := osext.ExecutableFolder()
     if err != nil {
-        log.Fatal(err)
+        fmt.Println(err)
     }
-    fmt.Println(folderPath)
+   log.Info(folderPath)
+	
+		log.Info("Get path 2 ...")
+	pwd, err := os.Getwd()
+    if err != nil {
+        fmt.Println(err)
+    }
+    log.Info(pwd)
+	
+		log.Info("Get path 3 ...")
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+            fmt.Println(err)
+    }
+    log.Info(dir)
+	
 	
 	nugetPth := "NuGet4.exe"
 	
