@@ -151,7 +151,7 @@ func main() {
 		nugetRestoreCmdArgs = []string{constants.MonoPath, downloadPth}
 	}
 
-	nugetRestoreCmdArgs := []string{nugetPth}
+	nugetRestoreCmdArgs = []string{nugetPth}
 	fmt.Println()
 	log.Info("Restoring Nuget packages...")
 
