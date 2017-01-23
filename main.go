@@ -109,6 +109,7 @@ func main() {
 	
 	nugelLocalPath := filepath.Join(pwd, "NuGet4.exe")
 	nugetRestoreCmdArgs := []string{constants.MonoPath, "NuGet4.exe"}
+	nugetClearCmdArgs := []string{constants.MonoPath, "NuGet4.exe"}
     fmt.Println(nugelLocalPath)
     fmt.Println(nugetRestoreCmdArgs)
 
@@ -165,12 +166,13 @@ func main() {
 		}
 
 		nugetRestoreCmdArgs = []string{constants.MonoPath, downloadPth}
+		nugetClearCmdArgs = []string{constants.MonoPath, downloadPth}
 	}
 
 	fmt.Println()
 	
 	log.Info("Invoke nuget locals all -clear...")
-	nugetClearCmdArgs = []string{constants.MonoPath, downloadPth, "locals all -clear"}
+	nugetClearCmdArgs = append(nugetClearCmdArgs, "locals all -clear")
 	cmdex.NewCommandFromSlice(nugetClearCmdArgs)
 	log.Info("Restoring Nuget packages...")
 	
