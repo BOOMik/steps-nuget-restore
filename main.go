@@ -168,8 +168,12 @@ func main() {
 	}
 
 	fmt.Println()
+	
+	log.Info("Invoke nuget locals all -clear...")
+	nugetClearCmdArgs = []string{constants.MonoPath, downloadPth, "locals all -clear"}
+	cmdex.NewCommandFromSlice(nugetClearCmdArgs)
 	log.Info("Restoring Nuget packages...")
-
+	
 	nugetRestoreCmdArgs = append(nugetRestoreCmdArgs, "restore", configs.XamarinSolution)
 
 	if err := retry.Times(1).Try(func(attempt uint) error {
